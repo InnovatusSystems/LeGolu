@@ -17,5 +17,6 @@ pause();const held=current;tick(30000);if(current!==held||$('countdown').textCon
 if(backgroundAudio.src)throw Error('Unexpected custom music');
 `,sandbox);
 for(let i=0;i<10;i++)assert(fs.statSync(`dist/assets/goddess-${i}.jpeg`).size>0);
-assert(fs.readFileSync('dist/assets/tabla-drums-demo.ogg').subarray(0,4).toString()==='OggS');
-console.log('PASS: 26 slides; saved timing migration; 20-second advance; countdown and pause; looping; pointers; Ogg audio.');
+assert(fs.statSync('dist/assets/aigiri-nandini-instrumental.mp3').size>100000);
+assert(fs.readFileSync('dist/app.js','utf8').includes("new Audio('assets/aigiri-nandini-instrumental.mp3')"));
+console.log('PASS: 26 slides; saved timing migration; 20-second advance; countdown and pause; looping; pointers; MP3 score.');

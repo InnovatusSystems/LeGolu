@@ -46,11 +46,11 @@ async function fullscreen(){try{if(document.fullscreenElement)await document.exi
 $('settings').onclick=()=>$('setup').showModal();$('close').onclick=()=>$('setup').close();for(const id of ['left','right','seconds','arrows'])$(id).oninput=()=>{bounds=[+$('left').value,+$('right').value];duration=Math.max(5,Math.min(60,+$('seconds').value||20))*1000;elapsed=0;positionPointer();try{localStorage.setItem('legolu',JSON.stringify({bounds,duration,timingVersion:2,arrows:$('arrows').checked}))}catch{}};
 let hide;document.addEventListener('pointermove',()=>{document.body.classList.add('controls');clearTimeout(hide);hide=setTimeout(()=>document.body.classList.remove('controls'),2500)});
 document.addEventListener('keydown',e=>{if($('setup').open||/INPUT|BUTTON/.test(document.activeElement.tagName))return;if(['ArrowRight','ArrowLeft',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowRight')go(current+1);if(e.key==='ArrowLeft')go(current-1);if(e.key===' ')pause();if(e.key.toLowerCase()==='f')fullscreen();if(e.key.toLowerCase()==='m')toggleMusic()});
-// Bundled unmodified tabla recording; attribution and licence in sources.html.
+// Rendered from the host-provided flute, keyboard, and drone MIDI.
 let musicOn=false,customUrl;
-const backgroundAudio=new Audio('assets/tabla-drums-demo.ogg');
+const backgroundAudio=new Audio('assets/aigiri-nandini-instrumental.mp3');
 backgroundAudio.loop=true;backgroundAudio.preload='metadata';backgroundAudio.volume=+$('volume').value;
-async function toggleMusic(){try{if(musicOn){backgroundAudio.pause();musicOn=false}else{await backgroundAudio.play();musicOn=true}$('music').textContent=musicOn?'Mute tabla':'Enable tabla'}catch{musicOn=false;$('music').textContent='Try tabla again'}}
+async function toggleMusic(){try{if(musicOn){backgroundAudio.pause();musicOn=false}else{await backgroundAudio.play();musicOn=true}$('music').textContent=musicOn?'Mute music':'Enable music'}catch{musicOn=false;$('music').textContent='Try music again'}}
 $('music').onclick=toggleMusic;
 $('volume').oninput=()=>{backgroundAudio.volume=+$('volume').value};
 $('audioFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;backgroundAudio.pause();musicOn=false;if(customUrl)URL.revokeObjectURL(customUrl);customUrl=URL.createObjectURL(file);backgroundAudio.src=customUrl;await toggleMusic()};
