@@ -5,3 +5,4 @@
 .home-title{font-size:1.65vw;align-items:center}.home-title .word-gap{width:.42em}.home-title .brick{min-width:.72em;padding:.1em .07em .06em}
 
 .battle-picture:before{display:none}.battle-art{width:100%;margin:0;display:flex;flex-direction:column;align-items:center;gap:1.5vh}.battle-art img,.battle-art video{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain;background:#fff;border-radius:12px;box-shadow:0 0 0 1px #f5cd7c66,0 15px 40px #16051266}.battle-art figcaption{color:var(--gold);font:1vw Arial;letter-spacing:.06em;text-align:center}.battle-art video{aspect-ratio:640/420;background:#fff4d7}
+.festival-icon{display:block;width:28vw;height:28vw;max-height:58vh}

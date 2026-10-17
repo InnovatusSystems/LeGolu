@@ -4,10 +4,11 @@ function element(){return {value:'10',checked:true,style:{},children:[],classLis
 const sandbox={console,performance:{now:()=>0},localStorage:{getItem:()=>JSON.stringify({bounds:[6,94],duration:10000,arrows:true}),setItem(){}},document:{getElementById(id){if(!elements.has(id))elements.set(id,element());return elements.get(id)},createElement:element,addEventListener(){},body:element()},Audio:class{pause(){} async play(){}},Image:class{},requestAnimationFrame(){},setTimeout,clearTimeout};
 vm.createContext(sandbox);vm.runInContext(fs.readFileSync('dist/app.js','utf8'),sandbox);
 vm.runInContext(`
-if(slides.length!==28)throw Error('Expected twenty-eight slides');
+if(slides.length!==31)throw Error('Expected thirty-one slides');
 for(let i=0;i<slides.length;i++){go(i);if(!$('stage').innerHTML.includes(slides[i].title))throw Error('Slide render failed');}
 if(!slides[13].drawing||!slides[14].movie)throw Error('Children’s artwork must follow slide thirteen');
 go(14);if(!$('stage').innerHTML.includes('muted loop playsinline'))throw Error('Expected silent looping video');
+if(!slides[16].tag.includes('Bengal')||!slides[17].tag.includes('Gujarat')||!slides[18].tag.includes('Karnataka'))throw Error('Regional slides must follow slide sixteen');
 go(slides.length-1);go(current+1);if(current!==0)throw Error('Loop failed');
 go(3);if($('pointer').style.left!=='6%')throw Error('First pointer alignment');
 go(11);if($('pointer').style.left!=='94%')throw Error('Last pointer alignment');
@@ -21,7 +22,7 @@ if(backgroundAudio.src)throw Error('Unexpected custom music');
 for(let i=0;i<10;i++)assert(fs.statSync(`dist/assets/goddess-${i}.jpeg`).size>0);
 assert(fs.statSync('dist/assets/aigiri-nandini-instrumental.mp3').size>100000);
 assert(fs.readFileSync('dist/app.js','utf8').includes("new Audio('assets/aigiri-nandini-instrumental.mp3')"));
-console.log('PASS: 28 slides; saved timing migration; 20-second advance; countdown and pause; looping; pointers; MP3 score.');
+console.log('PASS: 31 slides; saved timing migration; 20-second advance; countdown and pause; looping; pointers; MP3 score.');
 
 assert(fs.statSync('dist/assets/childrens-durga-battle.png').size>0);
 assert(fs.statSync('dist/assets/childrens-durga-battle.mp4').size>0);
