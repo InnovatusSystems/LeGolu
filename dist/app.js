@@ -44,7 +44,10 @@ function tick(t){if(!paused&&!$('setup').open){elapsed+=Math.min(t-last,1000);if
 $('previous').onclick=()=>go(current-1);$('next').onclick=()=>go(current+1);function pause(){paused=!paused;document.body.classList[paused?'add':'remove']('slideshow-paused');$('pause').textContent=paused?'Play':'Pause'}$('pause').onclick=pause;
 async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{}}$('fullscreen').onclick=fullscreen;
 $('settings').onclick=()=>$('setup').showModal();$('close').onclick=()=>$('setup').close();for(const id of ['left','right','seconds','arrows'])$(id).oninput=()=>{bounds=[+$('left').value,+$('right').value];duration=Math.max(5,Math.min(60,+$('seconds').value||20))*1000;elapsed=0;positionPointer();try{localStorage.setItem('legolu',JSON.stringify({bounds,duration,timingVersion:2,arrows:$('arrows').checked}))}catch{}};
-let hide;document.addEventListener('pointermove',()=>{document.body.classList.add('controls');clearTimeout(hide);hide=setTimeout(()=>document.body.classList.remove('controls'),2500)});
+let hide;
+function showControls(){document.body.classList.add('controls');clearTimeout(hide);hide=setTimeout(()=>document.body.classList.remove('controls'),2500)}
+for(const event of ['pointermove','pointerdown','keydown','focusin'])document.addEventListener(event,showControls);
+showControls();
 document.addEventListener('keydown',e=>{if($('setup').open||/INPUT|BUTTON/.test(document.activeElement.tagName))return;if(['ArrowRight','ArrowLeft',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowRight')go(current+1);if(e.key==='ArrowLeft')go(current-1);if(e.key===' ')pause();if(e.key.toLowerCase()==='f')fullscreen();if(e.key.toLowerCase()==='m')toggleMusic()});
 // Rendered from the host-provided flute, keyboard, and drone MIDI.
 let musicOn=false,customUrl;
