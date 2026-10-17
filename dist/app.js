@@ -50,11 +50,14 @@ for(const event of ['pointermove','pointerdown','keydown','focusin'])document.ad
 showControls();
 document.addEventListener('keydown',e=>{if($('setup').open||/INPUT|BUTTON/.test(document.activeElement.tagName))return;if(['ArrowRight','ArrowLeft',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowRight')go(current+1);if(e.key==='ArrowLeft')go(current-1);if(e.key===' ')pause();if(e.key.toLowerCase()==='f')fullscreen();if(e.key.toLowerCase()==='m')toggleMusic()});
 // Rendered from the host-provided flute, keyboard, and drone MIDI.
-let musicOn=false,customUrl;
+let musicOn=false,musicWanted=true,musicStart,customUrl;
 const backgroundAudio=new Audio('assets/aigiri-nandini-instrumental.mp3');
-backgroundAudio.loop=true;backgroundAudio.preload='metadata';backgroundAudio.volume=+$('volume').value;
-async function toggleMusic(){try{if(musicOn){backgroundAudio.pause();musicOn=false}else{await backgroundAudio.play();musicOn=true}$('music').textContent=musicOn?'Mute music':'Enable music'}catch{musicOn=false;$('music').textContent='Try music again'}}
+backgroundAudio.loop=true;backgroundAudio.preload='auto';backgroundAudio.volume=1;$('volume').value=1;
+async function startMusic(){if(musicStart||!musicWanted||musicOn)return;musicStart=true;try{await backgroundAudio.play();if(musicWanted){musicOn=true;$('music').textContent='Mute music'}else backgroundAudio.pause()}catch{musicOn=false;$('music').textContent='Enable music'}finally{musicStart=false}}
+function toggleMusic(){if(musicOn){musicWanted=false;backgroundAudio.pause();musicOn=false;$('music').textContent='Enable music'}else{musicWanted=true;startMusic()}}
 $('music').onclick=toggleMusic;
 $('volume').oninput=()=>{backgroundAudio.volume=+$('volume').value};
-$('audioFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;backgroundAudio.pause();musicOn=false;if(customUrl)URL.revokeObjectURL(customUrl);customUrl=URL.createObjectURL(file);backgroundAudio.src=customUrl;await toggleMusic()};
+$('audioFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;backgroundAudio.pause();musicOn=false;musicWanted=true;if(customUrl)URL.revokeObjectURL(customUrl);customUrl=URL.createObjectURL(file);backgroundAudio.src=customUrl;await startMusic()};
+for(const event of ['click','keydown'])document.addEventListener(event,e=>{if(e.target.closest?.('#music')||(event==='keydown'&&e.key.toLowerCase()==='m'))return;startMusic()});
+startMusic();
 for(let i=0;i<10;i++){const img=new Image();img.src=`assets/goddess-${i}.jpeg`}render();requestAnimationFrame(tick);

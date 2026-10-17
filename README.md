@@ -2,11 +2,11 @@
 
 Open `dist/index.html` in Chrome or Edge. Everything, including the bundled Aigiri Nandini instrumental render, works locally without installation or internet.
 
-For projection, use a 16:9 landscape display. Click Fullscreen and Enable music. Controls fade when the mouse is still. Slides automatically advance every 20 seconds and loop through 26 slides (8 minutes 40 seconds at the default timing).
+For projection, use a 16:9 landscape display. Click Fullscreen. Music starts at full volume when browser autoplay policy permits; otherwise, your first click or keypress starts it. Controls fade when the mouse is still. Slides automatically advance every 20 seconds and loop through 26 slides (8 minutes 40 seconds at the default timing).
 
 The nine pictures are expected in traditional order, left to right as viewed by visitors. In Setup, adjust the first and last picture positions to align the downward arrows with your actual Golu padi. The intermediate positions are evenly spaced. Settings persist in the browser. Disable pointers if the projection and pictures cannot be aligned.
 
-Keyboard: arrow keys navigate; Space pauses; F toggles fullscreen; M toggles music. Setup also accepts an optional local audio recording and has a timing setting. Keep the tab in the foreground for projection. The Aigiri Nandini instrumental needs one click to start. It is rendered from the host-provided MIDI using its flute, keyboard, and drone tracks. Credits are in dist/sources.html. The original MIDI is retained in audio-source/. A chosen audio file is used only for the current session.
+Keyboard: arrow keys navigate; Space pauses; F toggles fullscreen; M toggles music. Setup also accepts an optional local audio recording and has a timing setting. Keep the tab in the foreground for projection. The Aigiri Nandini instrumental defaults to enabled at 100% player volume. Browsers may require an initial click or keypress before allowing sound. It is rendered from the host-provided MIDI using its flute, keyboard, and drone tracks. Credits are in dist/sources.html. The original MIDI is retained in audio-source/. A chosen audio file is used only for the current session.
 
 Images remain uncropped. Animated mandalas and drifting lights provide the moving background; reduced-motion system preferences are respected. Story sources are linked in `dist/sources.html`.
 
